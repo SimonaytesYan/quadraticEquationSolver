@@ -7,6 +7,7 @@ const int INF_ROOTS = -1;
 #include <math.h>
 #include <malloc.h>
 
+
 struct Roots {
 	int nRoots = 0;
 	double* roots = NULL;
@@ -107,7 +108,13 @@ Roots solve_1eq(double b, double c)
 	r.roots[0] = -c / b;
 	return r;
 }
-
+//!-----------------------------------------------------
+//! solve_2qe
+//! @param [in] a a-coefficient for equation 
+//! @param [in] b b-coefficient for equation
+//! @param [in] c c-coefficient for equation
+//! @param return function return Root-structure
+//! ----------------------------------------------------
 Roots solve_2eq(double a, double b, double c)
 {
 	assert(isfinite(a));
