@@ -13,6 +13,7 @@ int main()
 
 	Roots anses = solve_2eq(a, b, c);
 	Output(anses);
+	Del_Roots(&anses);
 	//}
 	return 0;
 }

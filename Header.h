@@ -9,15 +9,24 @@ const int INF_ROOTS = -1;
 
 struct Roots {
 	int nRoots = 0;
-	double* roots;
+	double* roots = NULL;
 };
 
-Roots Init(int nRoots) {
-	Roots r;
-	r.nRoots = nRoots;
-	if(nRoots > 0)
-		r.roots = (double*)malloc(sizeof(double)*nRoots);
-	return r;
+Roots Init_Roots(int nRoots) {
+	return Roots {nRoots, (nRoots > 0) ? (double*)malloc(sizeof(double) * nRoots) : NULL };
+}
+
+void Del_Roots(Roots* r) { 
+	if (r->roots != NULL)
+		free(r->roots);
+}
+
+bool Is_Same(double a, double b) {
+	return (a - E < b + E && b - E < a + E);
+}
+
+bool Is_Zero(double x) {
+	return (-E < x && x < E);
 }
 
 void clean_buffer() {
@@ -88,26 +97,15 @@ double D(double a, double b, double c)
 
 Roots solve_1eq(double b, double c) 
 {
-	Roots r;
-	if (-E < b && b < E)
+	if (Is_Zero(b))
 	{
-		if (-E < c && c < E)
-		{
-			r = Init(INF_ROOTS);
-			return r;
-		}
-		else
-		{
-			r = Init(0);
-			return r;
-		}
+		if (Is_Zero(c))
+			return Init_Roots(INF_ROOTS);
+		return Init_Roots(0);
 	}
-	else
-	{
-		r = Init(1);
-		r.roots[0] = -c / b;
-		return r;
-	}
+	Roots r = Init_Roots(1);
+	r.roots[0] = -c / b;
+	return r;
 }
 
 Roots solve_2eq(double a, double b, double c)
@@ -115,32 +113,26 @@ Roots solve_2eq(double a, double b, double c)
 	assert(isfinite(a));
 	assert(isfinite(b));
 	assert(isfinite(c));
-
-	Roots r;
-	if (-E < a && a < E)
-	{
+	
+	if (Is_Zero(a))
 		return solve_1eq(b, c);
-	}
 
 	double d = D(a, b, c);
 
-	if (- E < d && d < E)
+	if (Is_Zero(d))
 	{
-		r = Init(1);
+		Roots r = Init_Roots(1);
 		r.roots[0] = -b / (2 * a);
 		return r;
 	}
 
 	if (d < 0)
-	{
-		r = Init(0);
-		return r;
-	}
+		return Init_Roots(0);
 
-	d = sqrt(d);
-	r = Init(2);
-	r.roots[0] = (-b + d) / (2 * a);
-	r.roots[1] = (-b - d) / (2 * a);
+	double sqrt_d = sqrt(d);
+	Roots r = Init_Roots(2);
+	r.roots[0] = (-b - sqrt_d) / (2 * a);
+	r.roots[1] = (-b + sqrt_d) / (2 * a);
 	return r;
 }
 
@@ -148,17 +140,21 @@ void Output(Roots anses) {
 
 	if (anses.nRoots == INF_ROOTS)
 	{
-		printf("Infinity number of roots\n");
+		printf("InfInit_Rootsy number of roots\n");
+		return;
 	}
 	if (anses.nRoots == 0)
 	{
 		printf("No roots\n");
+		return;
 	}
-
 	if (anses.nRoots > 0) {
 		for (int i = 0; i < anses.nRoots; i++) {
 			printf("%lg ", anses.roots[i]);
 		}
 		printf("\n");
+		return;
 	}
+
+	printf("Error\n");
 }
