@@ -3,6 +3,7 @@ const double E = 1e-6;
 const int INF_ROOTS = -1;
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include <math.h>
 #include <malloc.h>
 
@@ -25,6 +26,10 @@ void clean_buffer() {
 
 void get_rand_coef(double* a, double* b, double* c)
 {
+	assert(a != NULL);
+	assert(b != NULL);
+	assert(c != NULL);
+
 	*a = rand();
 	double k = rand();
 	if (k == 0)
@@ -48,6 +53,10 @@ void get_rand_coef(double* a, double* b, double* c)
 
 void get_coef(double* a, double* b, double* c)
 {
+	assert(a != NULL);
+	assert(b != NULL);
+	assert(c != NULL);
+
 	printf("Enter the coefficient for x squared\n");
 	while (!scanf("%lg", a))
 	{
@@ -103,6 +112,10 @@ Roots solve_1eq(double b, double c)
 
 Roots solve_2eq(double a, double b, double c)
 {
+	assert(isfinite(a));
+	assert(isfinite(b));
+	assert(isfinite(c));
+
 	Roots r;
 	if (-E < a && a < E)
 	{

@@ -2,6 +2,8 @@
 
 int main() 
 {
+	printf("Quadratic Equation Solver\nby SYM \n2022 \n");
+
 	double a = 0, b = 0, c = 0;
 	
 	//while (true)
