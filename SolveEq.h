@@ -9,7 +9,7 @@ struct Roots {
 
 void Output(Roots anses);
 
-Roots Init_Roots(int nRoots);
+Roots* Init_Roots(int nRoots);
 
 void Del_Roots(Roots* r);
 
@@ -17,6 +17,6 @@ bool Is_Same(double a, double b);
 
 double Evaluate_Discriminant(double a, double b, double c);
 
-Roots Solve_1eq(double b, double c);
+Roots* Solve_1eq(double b, double c);
 
-Roots Solve_2eq(double a, double b, double c);
+Roots* Solve_2eq(double a, double b, double c);

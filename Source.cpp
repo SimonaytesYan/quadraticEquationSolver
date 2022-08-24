@@ -7,48 +7,48 @@
 
 const char * DEFAULT_TESTS_PATH = "UnitTests.txt";
 
-void Get_Test_From_File(FILE *fp, double* A, double* B, double* C, Roots* r_ans)
+void Get_Test_From_File(FILE *fp, double* A, double* B, double* C, Roots** r_ans)
 {
 	assert(fp != NULL);
 	assert(r_ans != NULL);
     int nRoots = 0;
 
 	fscanf(fp, "%lg %lg %lg", A, B, C);
-	printf("a = %lg\n"
+	/*printf("a = %lg\n"
 		"b = %lg\n"
-		"c = %lg\n", *A, *B, *C);
+		"c = %lg\n", *A, *B, *C);*/
 	fscanf(fp, "%d", &nRoots);
-	printf("Nroots = %d\n", nRoots);
+	//printf("Nroots = %d\n", nRoots);
 
 	*r_ans = Init_Roots(nRoots);
-	printf("Roots created\n");
+	//printf("Roots created\n");
 
 	for (int j = 0; j < nRoots; j++) {
-		fscanf(fp, "%lg", &r_ans->roots[j]);
-		printf("%lg ", r_ans->roots[j]);
+		fscanf(fp, "%lg", &((*r_ans)->roots[j]));
+		//printf("%lg ", r_ans->roots[j]);
 	}
-	printf("\n");
+	//printf("\n");
 }
 
-bool Test_2equ(double a, double b, double c, Roots *r_ans, Roots *ans)
+bool Test_2equ(double a, double b, double c, Roots *r_ans, Roots **ans)
 {
 	assert(r_ans != NULL);
 	assert(ans != NULL);
 
 	*ans = Solve_2eq(a, b, c);
 
-	printf("Equ solved\n");
-	printf("Right nRoots = %d\n", r_ans->nRoots);
-	printf("Got nRoots = %d\n", ans->nRoots);
-	if (ans->nRoots != r_ans->nRoots)
+	//printf("Equ solved\n");
+	//printf("Right nRoots = %d\n", r_ans->nRoots);
+	//printf("Got nRoots = %d\n", (*ans)->nRoots);
+	if ((*ans)->nRoots != r_ans->nRoots)
 		return false;
 
-	printf("Right nRoots\n");
+	//printf("Right nRoots\n");
 	for (int i = 0; i < r_ans->nRoots; i++) {
-		if (!Is_Same(ans->roots[i], r_ans->roots[i]))
+		if (!Is_Same((*ans)->roots[i], r_ans->roots[i]))
 			return false;
 	}
-	printf("End test\n");
+	//printf("End test\n");
 
 	return true;
 }
@@ -81,7 +81,6 @@ void Launch_Tests(ConsoleLine CL)
 	int TestN = 0;
 	fscanf(fp, "%d", &TestN);
 
-	printf("TestN = %d\n", TestN);
 	for (int i = 0; i < TestN; i++)
 	{
         printf("TEST %d: \n", i);
@@ -89,12 +88,11 @@ void Launch_Tests(ConsoleLine CL)
 		double A = 0;
 		double B = 0;
 		double C = 0;
-		Roots r_ans = {};
+		Roots* r_ans;
         Get_Test_From_File(fp, &A, &B, &C, &r_ans);
-		printf("Coef and Answer has been gotten\n");
-
-		Roots g_ans = {};
-        bool isPassed = Test_2equ(A, B, C, &r_ans, &g_ans);
+		//printf("Coef and Answer has been gotten\n");
+		Roots* g_ans;
+        bool isPassed = Test_2equ(A, B, C, r_ans, &g_ans);
 
         if (isPassed)
             printf("Passed!\n");
@@ -102,20 +100,20 @@ void Launch_Tests(ConsoleLine CL)
             printf("FAILED!!!\n");
 
             printf("Right answer: ");
-			for (int i1 = 0; i1 < r_ans.nRoots; i1++) {
-				printf("%lg ", r_ans.roots[i]);
+			for (int i1 = 0; i1 < r_ans->nRoots; i1++) {
+				printf("%lg ", r_ans->roots[i]);
 			}
 			printf("\n");
 
 			printf("Received answer: ");
-			for (int i1 = 0; i1 < g_ans.nRoots; i1++) {
-				printf("%lg ", g_ans.roots[i]);
+			for (int i1 = 0; i1 < g_ans->nRoots; i1++) {
+				printf("%lg ", g_ans->roots[i]);
             }
 			printf("\n");
         }
 
-        Del_Roots(&g_ans);
-        Del_Roots(&r_ans);
+        Del_Roots(g_ans);
+        Del_Roots(r_ans);
     }
 }
 
@@ -137,9 +135,9 @@ int main(int argc, const char* argv[])
 
 		Get_Coef(&a, &b, &c);
 
-		Roots anses = Solve_2eq(a, b, c);
-		Output(anses);
-		Del_Roots(&anses);
+		Roots* anses = Solve_2eq(a, b, c);
+		Output(*anses);
+		Del_Roots(anses);
 		break;
 	}
 	case UNIT_TEST_MODE:
