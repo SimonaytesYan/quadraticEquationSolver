@@ -1,10 +1,21 @@
+/*!
+* \file
+* \brief
+* File containing the definition of functions for parsing arguments from the console
+*/
 #include <stdio.h>
 #include <io.h>
 #include <string.h>
 #include "ConsoleHandler.h"
 
-ConsoleLine Parse_Console(int argc, const char* argv[]) {
-	ConsoleLine res;
+//!-------------------------------------------------
+//! Function to parse arguments from console
+//! \param [in] argc Number of arguments
+//! \param [in] argv Arguments (array of strings)
+//! 
+//! ------------------------------------------------
+LaunchAttributes Parse_Console(int argc, const char* argv[]) {
+	LaunchAttributes res;
 
 	for(int i = 0; i < argc; i++) {
 		if (argv[i][0] == '-') {
@@ -21,7 +32,7 @@ ConsoleLine Parse_Console(int argc, const char* argv[]) {
 			case 'f':
 				res.test_from_file = true;
 				if (i < argc - 1) {
-					res.test_file_name = (char*)argv[i];
+					res.test_file_name = argv[i + 1]; //!! unsafe cast
 				}
 				break;
 			default:

@@ -1,3 +1,8 @@
+/*!
+* \file
+* \brief
+* File containing the definition of functions to solve quadratic equations
+*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,58 +14,102 @@
 
 const double EPSILON = 1e-6;
 
-Roots* Init_Roots(int nRoots)
+//!-----------------------------------------------------
+//! Function to initialize Solutions structure
+//! \param [in] nRoots Number of roots in structure
+//! \return Return pointer to created structure
+//! 
+//!-----------------------------------------------------
+Solutions* Init_Solutions(int nRoots)
 {
-	Roots* r = (Roots*)malloc(sizeof(Roots));
+	Solutions* r = (Solutions*)malloc(sizeof(Solutions));
 	r->nRoots = nRoots;
 	if (nRoots > 0) {
-		//printf("Malloc start\n");
-		r->roots = (double*)malloc(nRoots*sizeof(double));
-		//printf("Malloc end\n");
+		r->roots = (double*)calloc(nRoots, sizeof(double));
 	}
-	//printf("End Init\n");
 	return r;
 }
 
-void Del_Roots(Roots* r)
+//!-----------------------------------------------------
+//! function to free memery from Solutions structure
+//! \param [in] r Pointer to the structure to be deleted
+//! 
+//!-----------------------------------------------------
+void Del_Solutions(Solutions* r)
 {
-	assert(r != NULL);
-	if (r->roots != NULL)
-		free(r->roots);
-	free(r);
+	if (r != nullptr)
+	{
+		if (r->roots != nullptr) 
+		{
+			free(r->roots);
+			r->roots = nullptr;
+		}
+		free(r);
+		r = nullptr;
+	}
 }
 
+//!-----------------------------------------------------
+//! Function to checking two double for similarity
+//! \param [in] a First double
+//! \param [in] b Second double
+//! \return Return true if a and b are the same and false otherwise
+//! 
+//! ----------------------------------------------------
 bool Is_Same(double a, double b)
 {
-	return (a - EPSILON < b + EPSILON && b - EPSILON < a + EPSILON);
+	return (a - b) < EPSILON && (a - b) > -EPSILON;
 }
 
+//!-----------------------------------------------------
+//! Function to find the discriminant
+//! \param [in] a Coefficient befor x^2
+//! \param [in] b Coefficient befor x
+//! \param [in] c Free coefficient
+//! 
+//! ----------------------------------------------------
 double Evaluate_Discriminant(double a, double b, double c)
 {
 	return b * b - 4 * a * c;
 }
 
-Roots* Solve_1eq(double b, double c)
+
+//!-----------------------------------------------------
+//! Function to solve linear equation
+//! \param [in] b Coefficient befor x
+//! \param [in] c Free coefficient
+//! \return Roots of equation
+//! 
+//! ----------------------------------------------------
+Solutions* Solve_1eq(double b, double c)
 {
 	if (Is_Same(b, 0.))
 	{
 		if (Is_Same(c, 0.))
-			return Init_Roots(INF_ROOTS);
-		return Init_Roots(0);
+			return Init_Solutions(INF_ROOTS);
+		return Init_Solutions(0);
 	}
 
-	Roots* r = Init_Roots(1);
+	Solutions* r = Init_Solutions(1);
 	r->roots[0] = -c / b;
 	return r;
 }
+
+void swap(double *a, double *b) {
+	double c = *a;
+	*a = *b;
+	*b = c;
+}
+
 //!-----------------------------------------------------
-//! solve_2qe
-//! @param [in] a a-coefficient for equation
-//! @param [in] b b-coefficient for equation
-//! @param [in] c c-coefficient for equation
-//! @return Roots of equation
+//! Function to solve quadratic equation
+//! \param [in] a Coefficient befor x^2
+//! \param [in] b Coefficient befor x
+//! \param [in] c Free coefficient
+//! \return Roots of equation
+//! 
 //! ----------------------------------------------------
-Roots* Solve_2eq(double a, double b, double c)
+Solutions* Solve_2eq(double a, double b, double c)
 {
 	assert(isfinite(a));
 	assert(isfinite(b));
@@ -73,28 +122,29 @@ Roots* Solve_2eq(double a, double b, double c)
 
 	if (Is_Same(d,0.))
 	{
-		Roots* r = Init_Roots(1);
+		Solutions* r = Init_Solutions(1);
 		r->roots[0] = -b / (2 * a);
 		return r;
 	}
 
 	if (d < 0)
-		return Init_Roots(0);
+		return Init_Solutions(0);
 
 	double sqrt_d = sqrt(d);
-	Roots* r = Init_Roots(2);
+	Solutions* r = Init_Solutions(2);
 	r->roots[0] = (-b - sqrt_d) / (2 * a);
 	r->roots[1] = (-b + sqrt_d) / (2 * a);
 	if (r->roots[0] > r->roots[1])
-	{
-		double swap = r->roots[0];
-		r->roots[0] = r->roots[1];
-		r->roots[1] = swap;
-	}
+		swap(&r->roots[0], &r->roots[1]);
 	return r;
 }
 
-void Output(Roots anses)
+//!-----------------------------------------------------
+//! Function to output in console line Roots structure
+//! \param [in] anses Roots structure to output
+//! 
+//! ----------------------------------------------------
+void Output_Solutions(Solutions  anses)
 {
 	if (anses.nRoots == INF_ROOTS)
 	{
@@ -115,6 +165,5 @@ void Output(Roots anses)
 		printf("\n");
 		return;
 	}
-
-	assert(0 && "Error\n");
+	printf("Wrong number of roots");
 }

@@ -1,3 +1,5 @@
 CppProperties.json
 *.exe
 .vs
+DoxygenManifest
+Documentation
