@@ -1,16 +1,16 @@
-/*!
-* \file
-* \brief
-* File containing the definition of functions to solve quadratic equations
-*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
 #include <assert.h>
 #include <math.h>
 #include <malloc.h>
 #include "SolveEq.h"
 #include "InAndOut.h"
+
+/*!
+* \file
+* \brief
+* File containing the definition of functions to solve quadratic equations
+*/
 
 const double EPSILON = 1e-6;
 
@@ -22,12 +22,12 @@ const double EPSILON = 1e-6;
 //!-----------------------------------------------------
 Solutions* Init_Solutions(int nRoots)
 {
-	Solutions* r = (Solutions*)malloc(sizeof(Solutions));
-	r->nRoots = nRoots;
+	Solutions* now_sol = (Solutions*)malloc(sizeof(Solutions));
+	now_sol->nRoots = nRoots;
 	if (nRoots > 0) {
-		r->roots = (double*)calloc(nRoots, sizeof(double));
+		now_sol->roots = (double*)calloc(nRoots, sizeof(double));
 	}
-	return r;
+	return now_sol;
 }
 
 //!-----------------------------------------------------
@@ -137,33 +137,4 @@ Solutions* Solve_2eq(double a, double b, double c)
 	if (r->roots[0] > r->roots[1])
 		swap(&r->roots[0], &r->roots[1]);
 	return r;
-}
-
-//!-----------------------------------------------------
-//! Function to output in console line Roots structure
-//! \param [in] anses Roots structure to output
-//! 
-//! ----------------------------------------------------
-void Output_Solutions(Solutions  anses)
-{
-	if (anses.nRoots == INF_ROOTS)
-	{
-		printf("Infinity number of roots\n");
-		return;
-	}
-	if (anses.nRoots == 0)
-	{
-		printf("No roots\n");
-		return;
-	}
-	if (anses.nRoots > 0)
-	{
-		for (int i = 0; i < anses.nRoots; i++)
-		{
-			printf("%lg ", anses.roots[i]);
-		}
-		printf("\n");
-		return;
-	}
-	printf("Wrong number of roots");
 }

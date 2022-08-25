@@ -1,12 +1,12 @@
+#include <stdio.h>
+#include <io.h>
+#include <string.h>
+#include "ConsoleHandler.h"
 /*!
 * \file
 * \brief
 * File containing the definition of functions for parsing arguments from the console
 */
-#include <stdio.h>
-#include <io.h>
-#include <string.h>
-#include "ConsoleHandler.h"
 
 //!-------------------------------------------------
 //! Function to parse arguments from console
@@ -30,12 +30,13 @@ LaunchAttributes Parse_Console(int argc, const char* argv[]) {
 				res.mode = INTERACTION_MODE;
 				break;
 			case 'f':
-				res.test_from_file = true;
+				res.test_from_custom_file = true;
 				if (i < argc - 1) {
 					res.test_file_name = argv[i + 1]; //!! unsafe cast
 				}
 				break;
 			default:
+				printf(""); //!!!! Bit' po golove
 				break;
 			}
 		}

@@ -1,3 +1,6 @@
+#ifndef SOLVE_EQ	//Сделать так все .h
+#define SOLVE_EQ
+
 #include <cstddef>
 
 const int INF_ROOTS = -1;
@@ -7,10 +10,11 @@ const int INF_ROOTS = -1;
 //!-----------------------------------------------------
 struct Solutions {
 	int nRoots = 0;			//!<Number of roots
-	double* roots = NULL;	//!<Dynamic array of roots
+	union {			
+		double* roots = nullptr;	//!<Dynamic array of roots
+		double root;
+	};
 };
-
-void Output_Solutions(Solutions  anses);
 
 Solutions* Init_Solutions(int nRoots);
 
@@ -23,3 +27,5 @@ double Evaluate_Discriminant(double a, double b, double c);
 Solutions* Solve_1eq(double b, double c);
 
 Solutions* Solve_2eq(double a, double b, double c);
+
+#endif // SOLVE_EQ
