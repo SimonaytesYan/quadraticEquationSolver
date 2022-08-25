@@ -11,4 +11,5 @@ bool Test_Quadraric_Eqution(double a, double b, double c, Solutions* correct_ans
 
 void Launch_Tests(LaunchAttributes Launch_Attrib);
 
+FILE* Open_Test_File(LaunchAttributes Launch_Attrib);
 #endif //UNIT_TEST

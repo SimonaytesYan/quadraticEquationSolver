@@ -10,9 +10,14 @@
 * File containing the definition of functions to Input and Output
 */
 
+void Print_Program_Info() {
+	printf("Quadratic Equation Solver\n"
+		"by SYM \n"
+		"2022 \n\n");
+}
 
 //!-----------------------------------------------------
-//! Function to output in console line Solutions structure
+//! Function to output in cmd Solutions structure
 //! \param [in] answers Solutions structure to output
 //! 
 //! ----------------------------------------------------

@@ -63,15 +63,16 @@ bool Test_Quadraric_Eqution(double a, double b, double c, Solutions* correct_ans
 }
 
 //!-------------------------------------------------
-//! Function to launch group test from file
-//! \param [in] CL ConsoleLine structure which has information about launch conditions from the console
+//! Function to open file from which Tests will be read
+//! \param [in] Launch_Attrib LaunchAttributes structure which has information about launch conditions from cmd (including custom test file name)
 //! 
 //! ------------------------------------------------
-void Launch_Tests(LaunchAttributes Launch_Attrib)
+
+FILE* Open_Test_File(LaunchAttributes Launch_Attrib) 
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	FILE *fp = nullptr;
 
-	FILE* fp = nullptr;					//Отдельная функция
 	if (Launch_Attrib.test_from_custom_file) {
 
 		if (Launch_Attrib.test_file_name != nullptr) {
@@ -95,8 +96,23 @@ void Launch_Tests(LaunchAttributes Launch_Attrib)
 		SetConsoleTextAttribute(hConsole, RED);
 		printf("No default tests were found\n");
 		SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);
-		return;
 	}
+	return fp;
+}
+
+//!-------------------------------------------------
+//! Function to launch group test from file
+//! \param [in] Launch_Attrib LaunchAttributes structure which has information about launch conditions from cmd
+//! 
+//! ------------------------------------------------
+void Launch_Tests(LaunchAttributes Launch_Attrib)
+{
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	FILE* fp = Open_Test_File(Launch_Attrib);
+
+	if (fp == nullptr)
+		return;
 
 	int TestN = 0;
 	Get_One_Int_From_File(fp, &TestN);
@@ -125,18 +141,23 @@ void Launch_Tests(LaunchAttributes Launch_Attrib)
 			SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);
 
 			printf("Correct number of roots = %d\n", correct_ans->nRoots);
-			printf("Right answer: ");
-			for (int i1 = 0; i1 < correct_ans->nRoots; i1++) {
-				printf("%lg ", correct_ans->roots[i]);
+			if (correct_ans->nRoots > 0) 
+			{
+				printf("Correct answer: ");
+				for (int i1 = 0; i1 < correct_ans->nRoots; i1++) {
+					printf("%lg ", correct_ans->roots[i]);
+				}
+				printf("\n");
 			}
-			printf("\n");
 
 			printf("Received number of roots = %d\n", program_ans->nRoots);
-			printf("Received answer: ");
-			for (int i1 = 0; i1 < program_ans->nRoots; i1++) {
-				printf("%lg ", program_ans->roots[i]);
+			if (program_ans->nRoots > 0) {
+				printf("Received answer: ");
+				for (int i1 = 0; i1 < program_ans->nRoots; i1++) {
+					printf("%lg ", program_ans->roots[i]);
+				}
+				printf("\n");
 			}
-			printf("\n");
 		}
 
 		Del_Solutions(correct_ans);

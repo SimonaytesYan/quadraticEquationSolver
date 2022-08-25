@@ -23,4 +23,6 @@ void Get_Coef(double* a, double* b, double* c);
 
 void Output_Solutions(Solutions*  anses);
 
+void Print_Program_Info();
+
 #endif //IN_AND_OUT

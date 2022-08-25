@@ -84,11 +84,11 @@ static double Evaluate_Discriminant(double a, double b, double c)
 //! \return		Structure Solutions with solution data
 //! 
 //! ----------------------------------------------------
-Solutions* Solve_Linear_Equation(double b, double c)		//!!
+Solutions* Solve_Linear_Equation(double b, double c)
 {
-	if (Is_Equal(b, 0.))
+	if (Is_Equal(b, 0))
 	{
-		if (Is_Equal(c, 0.))
+		if (Is_Equal(c, 0))
 			return Init_Solutions(INF_ROOTS);
 		return Init_Solutions(0);
 	}
@@ -112,18 +112,18 @@ void swap(double *a, double *b) {	//!!void*
 //! \return		Structure Solutions with solution data
 //! 
 //! ----------------------------------------------------
-Solutions* Solve_Quadraric_Eqution(double a, double b, double c)		//!!
+Solutions* Solve_Quadraric_Eqution(double a, double b, double c)
 {
 	assert(isfinite(a));
 	assert(isfinite(b));
 	assert(isfinite(c));
 
-	if (Is_Equal(a,0.))
+	if (Is_Equal(a,0))
 		return Solve_Linear_Equation(b, c);
 
 	double d = Evaluate_Discriminant(a, b, c);
 
-	if (Is_Equal(d,0.))
+	if (Is_Equal(d,0))
 	{
 		Solutions* r = Init_Solutions(1);
 		r->roots[0] = -b / (2 * a);

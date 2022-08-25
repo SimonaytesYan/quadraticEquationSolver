@@ -37,9 +37,7 @@ int main(int argc, const char* argv[])
 
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);	//Wrapper printf
-	printf("Quadratic Equation Solver\n"		//Отбельная функция
-				 "by SYM \n"
-				 "2022 \n\n");
+	Print_Program_Info();
 
 	LaunchAttributes Launch_Attrib = Parse_Console(argc, argv);
 
