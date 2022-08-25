@@ -15,60 +15,63 @@
 const double EPSILON = 1e-6;
 
 //!-----------------------------------------------------
-//! Function to initialize Solutions structure
-//! \param [in] nRoots Number of roots in structure
-//! \return Return pointer to created structure
+//! Solutions structure constuctor 
+//! \param [in] nRoots Ammount of roots in structure
+//! \return Return pointer to the created structure (or null after bad allocation)
 //! 
 //!-----------------------------------------------------
 Solutions* Init_Solutions(int nRoots)
 {
-	Solutions* now_sol = (Solutions*)malloc(sizeof(Solutions));
+	Solutions* now_sol = (Solutions*)calloc(1, sizeof(Solutions));
+	if (now_sol == NULL)
+		return NULL;
 	now_sol->nRoots = nRoots;
-	if (nRoots > 0) {
+	if (nRoots > 0) 
+	{
 		now_sol->roots = (double*)calloc(nRoots, sizeof(double));
+
+		if (now_sol->roots == NULL) 
+		{
+			free(now_sol);
+			return NULL;
+		}
 	}
 	return now_sol;
 }
 
 //!-----------------------------------------------------
-//! function to free memery from Solutions structure
-//! \param [in] r Pointer to the structure to be deleted
+//! Structure Solutions destructor
+//! \param [in] r Pointer to the structure to be destructed
 //! 
 //!-----------------------------------------------------
 void Del_Solutions(Solutions* r)
 {
-	if (r != nullptr)
-	{
-		if (r->roots != nullptr) 
-		{
-			free(r->roots);
-			r->roots = nullptr;
-		}
-		free(r);
-		r = nullptr;
-	}
+	free(r->roots);
+	r->roots = nullptr;
+	free(r);
+	r = nullptr;
 }
 
 //!-----------------------------------------------------
-//! Function to checking two double for similarity
+//! Function for checking two doubles for equality
 //! \param [in] a First double
 //! \param [in] b Second double
 //! \return Return true if a and b are the same and false otherwise
 //! 
 //! ----------------------------------------------------
-bool Is_Same(double a, double b)
+bool Is_Equal(double a, double b)
 {
 	return (a - b) < EPSILON && (a - b) > -EPSILON;
 }
 
 //!-----------------------------------------------------
-//! Function to find the discriminant
-//! \param [in] a Coefficient befor x^2
-//! \param [in] b Coefficient befor x
-//! \param [in] c Free coefficient
+//! Function to evaluate the discriminant
+//! \param [in] a Coefficient before x^2
+//! \param [in] b Coefficient before x
+//! \param [in] c Free term
 //! 
 //! ----------------------------------------------------
-double Evaluate_Discriminant(double a, double b, double c)
+static double Evaluate_Discriminant(double a, double b, double c)
 {
 	return b * b - 4 * a * c;
 }
@@ -76,16 +79,16 @@ double Evaluate_Discriminant(double a, double b, double c)
 
 //!-----------------------------------------------------
 //! Function to solve linear equation
-//! \param [in] b Coefficient befor x
-//! \param [in] c Free coefficient
-//! \return Roots of equation
+//! \param [in] b Coefficient before x
+//! \param [in] c Free term
+//! \return		Structure Solutions with solution data
 //! 
 //! ----------------------------------------------------
-Solutions* Solve_1eq(double b, double c)
+Solutions* Solve_Linear_Equation(double b, double c)		//!!
 {
-	if (Is_Same(b, 0.))
+	if (Is_Equal(b, 0.))
 	{
-		if (Is_Same(c, 0.))
+		if (Is_Equal(c, 0.))
 			return Init_Solutions(INF_ROOTS);
 		return Init_Solutions(0);
 	}
@@ -95,7 +98,7 @@ Solutions* Solve_1eq(double b, double c)
 	return r;
 }
 
-void swap(double *a, double *b) {
+void swap(double *a, double *b) {	//!!void*
 	double c = *a;
 	*a = *b;
 	*b = c;
@@ -103,24 +106,24 @@ void swap(double *a, double *b) {
 
 //!-----------------------------------------------------
 //! Function to solve quadratic equation
-//! \param [in] a Coefficient befor x^2
-//! \param [in] b Coefficient befor x
-//! \param [in] c Free coefficient
-//! \return Roots of equation
+//! \param [in] a Coefficient before x^2
+//! \param [in] b Coefficient before x
+//! \param [in] c Free term
+//! \return		Structure Solutions with solution data
 //! 
 //! ----------------------------------------------------
-Solutions* Solve_2eq(double a, double b, double c)
+Solutions* Solve_Quadraric_Eqution(double a, double b, double c)		//!!
 {
 	assert(isfinite(a));
 	assert(isfinite(b));
 	assert(isfinite(c));
 
-	if (Is_Same(a,0.))
-		return Solve_1eq(b, c);
+	if (Is_Equal(a,0.))
+		return Solve_Linear_Equation(b, c);
 
 	double d = Evaluate_Discriminant(a, b, c);
 
-	if (Is_Same(d,0.))
+	if (Is_Equal(d,0.))
 	{
 		Solutions* r = Init_Solutions(1);
 		r->roots[0] = -b / (2 * a);

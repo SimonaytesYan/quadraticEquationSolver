@@ -18,4 +18,4 @@ struct LaunchAttributes
 
 LaunchAttributes Parse_Console(int argc, const char* argv[]);
 
-#endif
+#endif //CONSOLE_HANDLER

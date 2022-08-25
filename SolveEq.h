@@ -10,22 +10,17 @@ const int INF_ROOTS = -1;
 //!-----------------------------------------------------
 struct Solutions {
 	int nRoots = 0;			//!<Number of roots
-	union {			
-		double* roots = nullptr;	//!<Dynamic array of roots
-		double root;
-	};
+	double* roots = nullptr;	//!<Dynamic array of roots
 };
 
 Solutions* Init_Solutions(int nRoots);
 
 void Del_Solutions(Solutions* r);
 
-bool Is_Same(double a, double b);
+bool Is_Equal(double a, double b);
 
-double Evaluate_Discriminant(double a, double b, double c);
+Solutions* Solve_Linear_Equation(double b, double c);
 
-Solutions* Solve_1eq(double b, double c);
-
-Solutions* Solve_2eq(double a, double b, double c);
+Solutions* Solve_Quadraric_Eqution(double a, double b, double c);
 
 #endif // SOLVE_EQ
