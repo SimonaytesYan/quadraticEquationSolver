@@ -12,13 +12,13 @@
 */
 
 const CmdComand AllComands[] = {{"-h", "--help",		HELP_MODE,			NULL,							\
-"The program will take the coefficients of the quadratic equation from cmd and print its roots" },
+"The program will print all console flags with their description" },
 								{"-i", "--interection",	INTERACTION_MODE,	NULL,							\
-"Enter path to file from which unit tests will be taken (work only with -t flag)" },
+"The program will take the coefficients of the quadratic equation from cmd and print its roots" },
 								{"-t", "--test",		UNIT_TEST_MODE,		NULL,							\
 "The program will run tests from custom file if -f argument was used and from default file othervise"},
 								{"-f", "--file",		0,					Set_Testing_From_Custom_File,	\
-"The program will print all console flags with their description"}};
+"Enter path to file from which unit tests will be taken (work only with -t flag)" }};
 
 //!-------------------------------------------------
 //! Function to parse arguments from console
@@ -30,7 +30,7 @@ LaunchAttributes Parse_Console(int argc, const char* argv[]) {
 
 	LaunchAttributes res = {};
 
-	for(int i = 0; i < argc; i++) 
+	for(int i = 1; i < argc; i++) 
 	{
 		bool coincidence = false;
 		for (int j = 0; j < TOTAL_NUMBER_OF_COMMAND; j++) 
@@ -46,7 +46,10 @@ LaunchAttributes Parse_Console(int argc, const char* argv[]) {
 				break;
 			}
 		}
-		assert(coincidence && "Some comand flag not recognized");
+		if (argv[i][0] == '-' && !coincidence) {
+			printf("%s command flag not recognized", argv[i]);
+			abort();
+		}
 	}
 
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

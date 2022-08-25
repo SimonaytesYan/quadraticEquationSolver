@@ -8,7 +8,6 @@ const int RED = 12;
 const int YELLOW = 14;
 const int DEFAULT_COLOR = 15;
 
-
 int Clean_Buffer();
 
 void Get_Rand_Coef(double* a, double* b, double* c);

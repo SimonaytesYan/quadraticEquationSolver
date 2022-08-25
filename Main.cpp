@@ -15,25 +15,13 @@
 */
 
 /*! \mainpage Quadratic Equation Solver 
- *	by SYM 
+ *	SYM 
  *  2022
  *
- * \section intro_sec Console flags
- * 
- * \subsection step1 -s
- * Use -s to run program in interaction mode
- * 
- * \subsection step2 -t
- * Use -t to run Unit tests
- * 
- * \subsection step3 -f
- * Use -f to specify a custom file from which the unit test will be read.
- * File path incroduced after -f flag
  */
 
 int main(int argc, const char* argv[])
 {
-	//printf("\x1B[32m ERROR \033[0m\n");
 
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);	//Wrapper printf
