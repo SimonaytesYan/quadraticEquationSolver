@@ -57,9 +57,10 @@ int main(int argc, const char* argv[])
 		break;
 	}
 	case UNIT_TEST_MODE:
-	{
         Launch_Tests(Launch_Attrib);
-	}
+	break;
+	case HELP_MODE:
+		Print_All_Cmd_Flags();
 	break;
 	default:
 		printf("Wrong operation mode\n");
