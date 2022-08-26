@@ -3,22 +3,27 @@
 #include <string.h>
 #include <assert.h>
 #include <windows.h>
+
 #include "InAndOut.h"
 #include "ConsoleHandler.h"
+
 /*!
 * \file
 * \brief
 * File containing the definition of functions for parsing arguments from the console
 */
 
-const CmdComand AllComands[] = {{"-h", "--help",		HELP_MODE,			NULL,							\
-"The program will print all console flags with their description" },
-								{"-i", "--interection",	INTERACTION_MODE,	NULL,							\
-"The program will take the coefficients of the quadratic equation from cmd and print its roots" },
-								{"-t", "--test",		UNIT_TEST_MODE,		NULL,							\
-"The program will run tests from custom file if -f argument was used and from default file othervise"},
-								{"-f", "--file",		0,					Set_Testing_From_Custom_File,	\
-"Enter path to file from which unit tests will be taken (work only with -t flag)" }};
+const CmdComand AllComands[] = {{"-h", "--help",		HELP_MODE,			NULL,							
+                                 "The program will print all console flags with their description" },
+								
+								{"-i", "--interection",	INTERACTION_MODE,	NULL,							
+                                 "The program will take the coefficients of the round equation from cmd and print its roots" },
+								
+								{"-t", "--test",		UNIT_TEST_MODE,		NULL,							
+                                 "The program will run tests from custom file if -f argument was used and from default file othervise (-t if optional flag if -f was used)"},
+								
+								{"-f", "--file",		UNIT_TEST_MODE,		Set_Testing_From_Custom_File,	
+                                 "Enter path to file from which unit tests will be taken and program will run test from this file if file is able and from defult file othervise" }};
 
 //!-------------------------------------------------
 //! Function to parse arguments from console
@@ -40,9 +45,8 @@ LaunchAttributes Parse_Console(int argc, const char* argv[]) {
 				if (AllComands[j].calling_function != NULL) {
 					AllComands[j].calling_function(&res, argc, argv, i);
 				}
-				else {
-					res.mode = AllComands[j].program_mode;
-				}
+
+				res.mode = AllComands[j].program_mode;
 				break;
 			}
 		}
@@ -52,14 +56,17 @@ LaunchAttributes Parse_Console(int argc, const char* argv[]) {
 		}
 	}
 
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	return res;
 }
 
 void Print_All_Cmd_Flags() 
 {
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	for (int i = 0; i < TOTAL_NUMBER_OF_COMMAND; i++) {
+
+		SetConsoleTextAttribute(hConsole, GREEN);
 		printf("%s or %s\n", AllComands[i].short_name, AllComands[i].long_name);
+		SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);
 		printf("%s\n", AllComands[i].description);
 	}
 

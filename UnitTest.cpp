@@ -1,12 +1,20 @@
-#include "SolveEq.h"
-#include "InAndOut.h"
-#include "ConsoleHandler.h"
-#include "UnitTest.h"
 #include <assert.h>
 #include <windows.h>
 #include <stdio.h>
 
-const char* DEFAULT_TESTS_PATH = "UnitTests.txt";
+#include "SolveEq.h"
+#include "InAndOut.h"
+#include "ConsoleHandler.h"
+#include "UnitTest.h"
+
+const char* DEFAULT_TESTS_PATH = "UnitTests\\UnitTests.txt";
+
+/*!
+* \file
+* \brief
+* File containing the definition of functions to test solving 
+*/
+
 //!-------------------------------------------------
 //! Function to read test condition and correst answers to it
 //! \param [in]  fp    Pointer to file which the information will be read
@@ -18,8 +26,12 @@ const char* DEFAULT_TESTS_PATH = "UnitTests.txt";
 //! ------------------------------------------------
 void Get_Test_From_File(FILE* fp, double* A, double* B, double* C, Solutions** Correct_ans)
 {
+	assert(A != NULL);
+	assert(B != NULL);
+	assert(C != NULL);
 	assert(fp != nullptr);
 	assert(Correct_ans != nullptr);
+
 	int nRoots = 0;
 
 	Get_One_Double_From_File(fp, A);
@@ -44,12 +56,12 @@ void Get_Test_From_File(FILE* fp, double* A, double* B, double* C, Solutions** C
 //! \return true if test passed and false otherwise
 //! 
 //! ------------------------------------------------
-bool Test_Quadraric_Eqution(double a, double b, double c, Solutions* correct_ans, Solutions** program_ans)
+bool Test_Round_Eqution(double a, double b, double c, Solutions* correct_ans, Solutions** program_ans)
 {
 	assert(correct_ans != nullptr);
 	assert(program_ans != nullptr);
 
-	*program_ans = Solve_Quadraric_Eqution(a, b, c);
+	*program_ans = Solve_Round_Eqution(a, b, c);
 
 	if ((*program_ans)->nRoots != correct_ans->nRoots)
 		return false;
@@ -67,7 +79,6 @@ bool Test_Quadraric_Eqution(double a, double b, double c, Solutions* correct_ans
 //! \param [in] Launch_Attrib LaunchAttributes structure which has information about launch conditions from cmd (including custom test file name)
 //! 
 //! ------------------------------------------------
-
 FILE* Open_Test_File(LaunchAttributes Launch_Attrib) 
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -101,14 +112,61 @@ FILE* Open_Test_File(LaunchAttributes Launch_Attrib)
 }
 
 //!-------------------------------------------------
+//! Function to print "FAILED" and some debug information if isPassed false are different and "PASSED" othervise
+//! \param [in] isPassed	Variable indicating whether the test in question passed
+//! \param [in] program_ans Programmic response to a run test 				   
+//! \param [in] correct_ans Correct answer to a run test 
+//! 
+//! ------------------------------------------------
+void Print_Test_Result(bool isPassed, Solutions* program_ans, Solutions* correct_ans)
+{
+	assert(program_ans != NULL);
+	assert(correct_ans != NULL);
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	if (isPassed) 
+	{
+		SetConsoleTextAttribute(hConsole, GREEN);
+		printf("Passed!\n");
+		SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);
+	}
+	else 
+	{
+		SetConsoleTextAttribute(hConsole, RED);
+		printf("FAILED!!!\n");
+		SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);
+
+		printf("Correct number of roots = %d\n", correct_ans->nRoots);
+		if (correct_ans->nRoots > 0) 
+		{
+			printf("Correct answer: ");
+			for (int i1 = 0; i1 < correct_ans->nRoots; i1++)
+				printf("%lg ", correct_ans->roots[i1]);
+
+			printf("\n");
+		}
+	
+		printf("Received number of roots = %d\n", program_ans->nRoots);
+		if (program_ans->nRoots > 0) 
+		{
+			printf("Received answer: ");
+			for (int i1 = 0; i1 < program_ans->nRoots; i1++)
+				printf("%lg ", program_ans->roots[i1]);
+
+			printf("\n");
+		}
+	}
+
+}
+
+//!-------------------------------------------------
 //! Function to launch group test from file
 //! \param [in] Launch_Attrib LaunchAttributes structure which has information about launch conditions from cmd
 //! 
 //! ------------------------------------------------
-void Launch_Tests(LaunchAttributes Launch_Attrib)
+void Launch_Tests_For_Round_Equation_Solver(LaunchAttributes Launch_Attrib)
 {
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
 	FILE* fp = Open_Test_File(Launch_Attrib);
 
 	if (fp == nullptr)
@@ -128,37 +186,9 @@ void Launch_Tests(LaunchAttributes Launch_Attrib)
 		Get_Test_From_File(fp, &A, &B, &C, &correct_ans);
 
 		Solutions* program_ans = nullptr;
-		bool isPassed = Test_Quadraric_Eqution(A, B, C, correct_ans, &program_ans);
+		bool isPassed = Test_Round_Eqution(A, B, C, correct_ans, &program_ans);
 
-		if (isPassed) {
-			SetConsoleTextAttribute(hConsole, GREEN);
-			printf("Passed!\n");
-			SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);
-		}
-		else {
-			SetConsoleTextAttribute(hConsole, RED);
-			printf("FAILED!!!\n");
-			SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);
-
-			printf("Correct number of roots = %d\n", correct_ans->nRoots);
-			if (correct_ans->nRoots > 0) 
-			{
-				printf("Correct answer: ");
-				for (int i1 = 0; i1 < correct_ans->nRoots; i1++) {
-					printf("%lg ", correct_ans->roots[i]);
-				}
-				printf("\n");
-			}
-
-			printf("Received number of roots = %d\n", program_ans->nRoots);
-			if (program_ans->nRoots > 0) {
-				printf("Received answer: ");
-				for (int i1 = 0; i1 < program_ans->nRoots; i1++) {
-					printf("%lg ", program_ans->roots[i]);
-				}
-				printf("\n");
-			}
-		}
+		Print_Test_Result(isPassed, program_ans, correct_ans);
 
 		Del_Solutions(correct_ans);
 		Del_Solutions(program_ans);

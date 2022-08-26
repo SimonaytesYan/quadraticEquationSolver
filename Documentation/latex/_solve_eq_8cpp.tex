@@ -1,0 +1,148 @@
+\hypertarget{_solve_eq_8cpp}{}\doxysection{Solve\+Eq.\+cpp File Reference}
+\label{_solve_eq_8cpp}\index{SolveEq.cpp@{SolveEq.cpp}}
+
+
+File containing the definition of functions to solve round equations.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$malloc.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Solve\+Eq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}In\+And\+Out.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_solutions}{Solutions}} $\ast$ \mbox{\hyperlink{_solve_eq_8cpp_a133875e1a87c3530e3b50893feb6a2b8}{Init\+\_\+\+Solutions}} (int n\+Roots)
+\item 
+void \mbox{\hyperlink{_solve_eq_8cpp_a0d6424ca6f0b40d3d67a845d7bb9ee90}{Del\+\_\+\+Solutions}} (\mbox{\hyperlink{struct_solutions}{Solutions}} $\ast$r)
+\item 
+bool \mbox{\hyperlink{_solve_eq_8cpp_a855f5b0d840c152278f6bb0fe3cd555e}{Is\+\_\+\+Equal}} (double a, double b)
+\item 
+\mbox{\hyperlink{struct_solutions}{Solutions}} $\ast$ \mbox{\hyperlink{_solve_eq_8cpp_a95dd4eef90781e3d4fc374bcf87b0ce2}{Solve\+\_\+\+Linear\+\_\+\+Equation}} (double b, double c)
+\item 
+void \mbox{\hyperlink{_solve_eq_8cpp_abfa4eebba539e060400a6a7fe746614e}{swap\+\_\+double}} (double $\ast$a, double $\ast$b)
+\item 
+\mbox{\hyperlink{struct_solutions}{Solutions}} $\ast$ \mbox{\hyperlink{_solve_eq_8cpp_a7322100c7c01ae08a847482d4217ac84}{Solve\+\_\+\+Quadraric\+\_\+\+Eqution}} (double a, double b, double c)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_solve_eq_8cpp_a596344e5a2992d2beec43b76a6294de0}\label{_solve_eq_8cpp_a596344e5a2992d2beec43b76a6294de0}} 
+const double {\bfseries EPSILON} = 1e-\/6
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+File containing the definition of functions to solve round equations. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_solve_eq_8cpp_a0d6424ca6f0b40d3d67a845d7bb9ee90}\label{_solve_eq_8cpp_a0d6424ca6f0b40d3d67a845d7bb9ee90}} 
+\index{SolveEq.cpp@{SolveEq.cpp}!Del\_Solutions@{Del\_Solutions}}
+\index{Del\_Solutions@{Del\_Solutions}!SolveEq.cpp@{SolveEq.cpp}}
+\doxysubsubsection{\texorpdfstring{Del\_Solutions()}{Del\_Solutions()}}
+{\footnotesize\ttfamily void Del\+\_\+\+Solutions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_solutions}{Solutions}} $\ast$}]{r }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Structure \mbox{\hyperlink{struct_solutions}{Solutions}} destructor 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em r} & Pointer to the structure to be destructed\\
+\hline
+\end{DoxyParams}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_solve_eq_8cpp_a133875e1a87c3530e3b50893feb6a2b8}\label{_solve_eq_8cpp_a133875e1a87c3530e3b50893feb6a2b8}} 
+\index{SolveEq.cpp@{SolveEq.cpp}!Init\_Solutions@{Init\_Solutions}}
+\index{Init\_Solutions@{Init\_Solutions}!SolveEq.cpp@{SolveEq.cpp}}
+\doxysubsubsection{\texorpdfstring{Init\_Solutions()}{Init\_Solutions()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_solutions}{Solutions}}$\ast$ Init\+\_\+\+Solutions (\begin{DoxyParamCaption}\item[{int}]{n\+Roots }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ \mbox{\hyperlink{struct_solutions}{Solutions}} structure constuctor 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em n\+Roots} & Ammount of roots in structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return pointer to the created structure (or null after bad allocation)
+\end{DoxyReturn}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_solve_eq_8cpp_a855f5b0d840c152278f6bb0fe3cd555e}\label{_solve_eq_8cpp_a855f5b0d840c152278f6bb0fe3cd555e}} 
+\index{SolveEq.cpp@{SolveEq.cpp}!Is\_Equal@{Is\_Equal}}
+\index{Is\_Equal@{Is\_Equal}!SolveEq.cpp@{SolveEq.cpp}}
+\doxysubsubsection{\texorpdfstring{Is\_Equal()}{Is\_Equal()}}
+{\footnotesize\ttfamily bool Is\+\_\+\+Equal (\begin{DoxyParamCaption}\item[{double}]{a,  }\item[{double}]{b }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function for checking two doubles for equality 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em a} & First double \\
+\hline
+\mbox{\texttt{ in}}  & {\em b} & Second double \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true if a and b are the same and false otherwise
+\end{DoxyReturn}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_solve_eq_8cpp_a95dd4eef90781e3d4fc374bcf87b0ce2}\label{_solve_eq_8cpp_a95dd4eef90781e3d4fc374bcf87b0ce2}} 
+\index{SolveEq.cpp@{SolveEq.cpp}!Solve\_Linear\_Equation@{Solve\_Linear\_Equation}}
+\index{Solve\_Linear\_Equation@{Solve\_Linear\_Equation}!SolveEq.cpp@{SolveEq.cpp}}
+\doxysubsubsection{\texorpdfstring{Solve\_Linear\_Equation()}{Solve\_Linear\_Equation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_solutions}{Solutions}}$\ast$ Solve\+\_\+\+Linear\+\_\+\+Equation (\begin{DoxyParamCaption}\item[{double}]{b,  }\item[{double}]{c }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function to solve linear equation 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em b} & Coefficient before x \\
+\hline
+\mbox{\texttt{ in}}  & {\em c} & Free term \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Structure \mbox{\hyperlink{struct_solutions}{Solutions}} with solution data
+\end{DoxyReturn}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_solve_eq_8cpp_a7322100c7c01ae08a847482d4217ac84}\label{_solve_eq_8cpp_a7322100c7c01ae08a847482d4217ac84}} 
+\index{SolveEq.cpp@{SolveEq.cpp}!Solve\_Quadraric\_Eqution@{Solve\_Quadraric\_Eqution}}
+\index{Solve\_Quadraric\_Eqution@{Solve\_Quadraric\_Eqution}!SolveEq.cpp@{SolveEq.cpp}}
+\doxysubsubsection{\texorpdfstring{Solve\_Quadraric\_Eqution()}{Solve\_Quadraric\_Eqution()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_solutions}{Solutions}}$\ast$ Solve\+\_\+\+Quadraric\+\_\+\+Eqution (\begin{DoxyParamCaption}\item[{double}]{a,  }\item[{double}]{b,  }\item[{double}]{c }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function to solve round equation 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em a} & Coefficient before x$^\wedge$2 \\
+\hline
+\mbox{\texttt{ in}}  & {\em b} & Coefficient before x \\
+\hline
+\mbox{\texttt{ in}}  & {\em c} & Free term \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Structure \mbox{\hyperlink{struct_solutions}{Solutions}} with solution data
+\end{DoxyReturn}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_solve_eq_8cpp_abfa4eebba539e060400a6a7fe746614e}\label{_solve_eq_8cpp_abfa4eebba539e060400a6a7fe746614e}} 
+\index{SolveEq.cpp@{SolveEq.cpp}!swap\_double@{swap\_double}}
+\index{swap\_double@{swap\_double}!SolveEq.cpp@{SolveEq.cpp}}
+\doxysubsubsection{\texorpdfstring{swap\_double()}{swap\_double()}}
+{\footnotesize\ttfamily void swap\+\_\+double (\begin{DoxyParamCaption}\item[{double $\ast$}]{a,  }\item[{double $\ast$}]{b }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function to solve round equation 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em a} & Coefficient before x$^\wedge$2 \\
+\hline
+\mbox{\texttt{ in}}  & {\em b} & Coefficient before x \\
+\hline
+\mbox{\texttt{ in}}  & {\em c} & Free term \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Structure \mbox{\hyperlink{struct_solutions}{Solutions}} with solution data
+\end{DoxyReturn}
+\DoxyHorRuler{0}
+ 

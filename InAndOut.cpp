@@ -1,8 +1,10 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "InAndOut.h"
+
+#define _CRT_SECURE_NO_WARNINGS
 
 /*!
 * \file
@@ -10,8 +12,9 @@
 * File containing the definition of functions to Input and Output
 */
 
-void Print_Program_Info() {
-	printf("Quadratic Equation Solver\n"
+void Print_Program_Info() 
+{
+	printf("Round Equation Solver\n"
 		"by SYM \n"
 		"2022 \n\n");
 }
@@ -23,25 +26,22 @@ void Print_Program_Info() {
 //! ----------------------------------------------------
 void Output_Solutions(Solutions*  answers)
 {
-	if (answers == nullptr)
-		return;
+	assert(answers != NULL);
+
 	if (answers->nRoots == INF_ROOTS)
-	{
 		printf("Infinity number of roots\n");
-	}
+
 	else if (answers->nRoots == 0)
-	{
 		printf("No roots\n");
-	}
-	else if (answers->nRoots == 1) {
+
+	else if (answers->nRoots == 1)
 		printf("x = %lg\n", answers->roots[0]);
-	}
+
 	else if (answers->nRoots > 1)
 	{
 		for (int i = 0; i < answers->nRoots; i++)
-		{
 			printf("x%d = %lg ", i + 1, answers->roots[i]);
-		}
+
 		printf("\n");
 	}
 	else 
@@ -53,7 +53,6 @@ void Output_Solutions(Solutions*  answers)
 //! \return amount cleared symbols
 //! 
 //!-----------------------------------------------------
-
 int Clean_Buffer()
 {
 	int cnt = 0;
@@ -68,8 +67,8 @@ int Clean_Buffer()
 //! \param [in] fp Pointer to file from which value of variable will be read
 //! 
 //!-----------------------------------------------------
-
-void Get_One_Double_From_File(FILE* fp, double* a) {
+void Get_One_Double_From_File(FILE* fp, double* a) 
+{
 	assert(fp != nullptr);
 	assert(fscanf(fp, "%lg", a));
 }
@@ -80,8 +79,8 @@ void Get_One_Double_From_File(FILE* fp, double* a) {
 //! \param [in] fp Pointer to file from which value of variable will be read
 //! 
 //!-----------------------------------------------------
-
-void Get_One_Int_From_File(FILE* fp, int* a) {
+void Get_One_Int_From_File(FILE* fp, int* a) 
+{
 	assert(fp != nullptr);
 	assert(fscanf(fp, "%d", a));
 }
@@ -92,7 +91,11 @@ void Get_One_Int_From_File(FILE* fp, int* a) {
 //! \param [in] print Text that will be output to the cmd befor reading value of variable
 //! 
 //!-----------------------------------------------------
-void Get_One_Coef_From_Console(double *a, const char *print) {
+void Get_One_Coef_From_Console(double *a, const char *print) 
+{
+	assert(a != NULL);
+	assert(print != NULL);
+
 	do {
 		printf("%s\n", print);
 		while (!scanf("%lg", a))
@@ -102,6 +105,7 @@ void Get_One_Coef_From_Console(double *a, const char *print) {
 		}
 	} while (Clean_Buffer());
 }
+
 //!-----------------------------------------------------
 //! Function to read coefficients of equation from console input
 //! \param [out] a Pointer to variable in which coefficient before x^2 will be written
@@ -136,11 +140,11 @@ void Get_Rand_Coef(double* a, double* b, double* c)
 	assert(b != NULL);
 	assert(c != NULL);
 
-	*a = rand()/(rand() + 1) * (rand() % 3 - 1);
+	*a = rand()/(double)(rand() + 1) * (rand() % 3 - 1);
 
-	*b = rand()/(rand() + 1) * (rand() % 3 - 1);
+	*b = rand()/(double)(rand() + 1) * (rand() % 3 - 1);
 
-	*c = rand()/(rand() + 1) * (rand() % 3 - 1);
+	*c = rand()/(double)(rand() + 1) * (rand() % 3 - 1);
 
 	printf("%lg %lg %lg\n", *a, *b, *c);
 }

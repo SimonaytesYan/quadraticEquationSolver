@@ -1,11 +1,13 @@
 #ifndef IN_AND_OUT
 #define IN_AND_OUT
+
 #include <stdio.h>
+
 #include "SolveEq.h"
 
-const int GREEN = 10;
-const int RED = 12;
-const int YELLOW = 14;
+const int GREEN         = 10;
+const int RED           = 12;
+const int YELLOW        = 14;
 const int DEFAULT_COLOR = 15;
 
 int Clean_Buffer();

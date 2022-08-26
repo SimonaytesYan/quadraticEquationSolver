@@ -1,15 +1,17 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <assert.h>
 #include <math.h>
 #include <malloc.h>
+
 #include "SolveEq.h"
 #include "InAndOut.h"
 
 /*!
 * \file
 * \brief
-* File containing the definition of functions to solve quadratic equations
+* File containing the definition of functions to solve round equations
 */
 
 const double EPSILON = 1e-6;
@@ -25,6 +27,7 @@ Solutions* Init_Solutions(int nRoots)
 	Solutions* now_sol = (Solutions*)calloc(1, sizeof(Solutions));
 	if (now_sol == NULL)
 		return NULL;
+
 	now_sol->nRoots = nRoots;
 	if (nRoots > 0) 
 	{
@@ -36,6 +39,7 @@ Solutions* Init_Solutions(int nRoots)
 			return NULL;
 		}
 	}
+
 	return now_sol;
 }
 
@@ -98,25 +102,36 @@ Solutions* Solve_Linear_Equation(double b, double c)
 	return r;
 }
 
-void swap(double *a, double *b) {	//!!void*
-	double c = *a;
-	*a = *b;
-	*b = c;
-}
 
 //!-----------------------------------------------------
-//! Function to solve quadratic equation
+//! Function to solve round equation
 //! \param [in] a Coefficient before x^2
 //! \param [in] b Coefficient before x
 //! \param [in] c Free term
 //! \return		Structure Solutions with solution data
 //! 
 //! ----------------------------------------------------
-Solutions* Solve_Quadraric_Eqution(double a, double b, double c)
+void Swap_Double(double *a, double *b) 
 {
-	assert(isfinite(a));
-	assert(isfinite(b));
-	assert(isfinite(c));
+	assert(a != NULL);
+	assert(b != NULL);
+	double c = *a;
+	*a = *b;
+	*b = c;
+}
+
+//!-----------------------------------------------------
+//! Function to solve round equation
+//! \param [in] a Coefficient before x^2
+//! \param [in] b Coefficient before x
+//! \param [in] c Free term
+//! \return		Structure Solutions with solution data
+//! 
+//! ----------------------------------------------------
+Solutions* Solve_Round_Eqution(double a, double b, double c)
+{
+	if (!isfinite(a) || !isfinite(b) || !isfinite(c))
+		return nullptr;
 
 	if (Is_Equal(a,0))
 		return Solve_Linear_Equation(b, c);
@@ -137,7 +152,9 @@ Solutions* Solve_Quadraric_Eqution(double a, double b, double c)
 	Solutions* r = Init_Solutions(2);
 	r->roots[0] = (-b - sqrt_d) / (2 * a);
 	r->roots[1] = (-b + sqrt_d) / (2 * a);
+
 	if (r->roots[0] > r->roots[1])
-		swap(&r->roots[0], &r->roots[1]);
+		Swap_Double(&r->roots[0], &r->roots[1]);
+	
 	return r;
 }

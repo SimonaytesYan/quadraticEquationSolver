@@ -5,6 +5,7 @@ const int HELP_MODE = 2;
 const int UNIT_TEST_MODE = 1;
 const int INTERACTION_MODE = 0;
 const int TOTAL_NUMBER_OF_COMMAND = 4;
+
 //!-------------------------------------------------
 //! Structure to store information about launch conditions from the console
 //! 

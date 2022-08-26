@@ -21,6 +21,6 @@ bool Is_Equal(double a, double b);
 
 Solutions* Solve_Linear_Equation(double b, double c);
 
-Solutions* Solve_Quadraric_Eqution(double a, double b, double c);
+Solutions* Solve_Round_Eqution(double a, double b, double c);
 
 #endif // SOLVE_EQ

@@ -1,0 +1,77 @@
+\hypertarget{_console_handler_8cpp}{}\doxysection{Console\+Handler.\+cpp File Reference}
+\label{_console_handler_8cpp}\index{ConsoleHandler.cpp@{ConsoleHandler.cpp}}
+
+
+File containing the definition of functions for parsing arguments from the console.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$io.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$windows.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}In\+And\+Out.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Console\+Handler.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_launch_attributes}{Launch\+Attributes}} \mbox{\hyperlink{_console_handler_8cpp_a6628ecfcb79c1486d269fd8fca50c42d}{Parse\+\_\+\+Console}} (int argc, const char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+\mbox{\Hypertarget{_console_handler_8cpp_a697426828b54e201a86915a10ad22b96}\label{_console_handler_8cpp_a697426828b54e201a86915a10ad22b96}} 
+void {\bfseries Print\+\_\+\+All\+\_\+\+Cmd\+\_\+\+Flags} ()
+\item 
+\mbox{\Hypertarget{_console_handler_8cpp_a0be561de55d02d060a3787d2180c55a0}\label{_console_handler_8cpp_a0be561de55d02d060a3787d2180c55a0}} 
+void {\bfseries Set\+\_\+\+Testing\+\_\+\+From\+\_\+\+Custom\+\_\+\+File} (\mbox{\hyperlink{struct_launch_attributes}{Launch\+Attributes}} $\ast$Launch\+\_\+attrib, int argc, const char $\ast$argv\mbox{[}$\,$\mbox{]}, int index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{struct_cmd_comand}{Cmd\+Comand}} {\bfseries All\+Comands} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+File containing the definition of functions for parsing arguments from the console. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_console_handler_8cpp_a6628ecfcb79c1486d269fd8fca50c42d}\label{_console_handler_8cpp_a6628ecfcb79c1486d269fd8fca50c42d}} 
+\index{ConsoleHandler.cpp@{ConsoleHandler.cpp}!Parse\_Console@{Parse\_Console}}
+\index{Parse\_Console@{Parse\_Console}!ConsoleHandler.cpp@{ConsoleHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{Parse\_Console()}{Parse\_Console()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_launch_attributes}{Launch\+Attributes}} Parse\+\_\+\+Console (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{const char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function to parse arguments from console 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argc} & Number of arguments \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & Arguments (array of strings)\\
+\hline
+\end{DoxyParams}
+\DoxyHorRuler{0}
+ 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{_console_handler_8cpp_a71f5d21fde27ee24f9f45db857cb2aa0}\label{_console_handler_8cpp_a71f5d21fde27ee24f9f45db857cb2aa0}} 
+\index{ConsoleHandler.cpp@{ConsoleHandler.cpp}!AllComands@{AllComands}}
+\index{AllComands@{AllComands}!ConsoleHandler.cpp@{ConsoleHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{AllComands}{AllComands}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{struct_cmd_comand}{Cmd\+Comand}} All\+Comands\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{\{\textcolor{stringliteral}{"{}-\/h"{}}, \textcolor{stringliteral}{"{}-\/-\/help"{}},     HELP\_MODE,          NULL,                           }
+\DoxyCodeLine{                                 \textcolor{stringliteral}{"{}The program will print all console flags with their description"{}} \},}
+\DoxyCodeLine{                                }
+\DoxyCodeLine{                                \{\textcolor{stringliteral}{"{}-\/i"{}}, \textcolor{stringliteral}{"{}-\/-\/interection"{}}, INTERACTION\_MODE,   NULL,                           }
+\DoxyCodeLine{                                 \textcolor{stringliteral}{"{}The program will take the coefficients of the round equation from cmd and print its roots"{}} \},}
+\DoxyCodeLine{                                }
+\DoxyCodeLine{                                \{\textcolor{stringliteral}{"{}-\/t"{}}, \textcolor{stringliteral}{"{}-\/-\/test"{}},        UNIT\_TEST\_MODE,     NULL,                           }
+\DoxyCodeLine{                                 \textcolor{stringliteral}{"{}The program will run tests from custom file if -\/f argument was used and from default file othervise (-\/t if optional flag if -\/f was used)"{}}\},}
+\DoxyCodeLine{                                }
+\DoxyCodeLine{                                \{\textcolor{stringliteral}{"{}-\/f"{}}, \textcolor{stringliteral}{"{}-\/-\/file"{}},        UNIT\_TEST\_MODE,     Set\_Testing\_From\_Custom\_File,   }
+\DoxyCodeLine{                                 \textcolor{stringliteral}{"{}Enter path to file from which unit tests will be taken and program will run test from this file if file is able and from defult file othervise"{}} \}\}}
+
+\end{DoxyCode}

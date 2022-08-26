@@ -1,0 +1,143 @@
+\hypertarget{_in_and_out_8cpp}{}\doxysection{In\+And\+Out.\+cpp File Reference}
+\label{_in_and_out_8cpp}\index{InAndOut.cpp@{InAndOut.cpp}}
+
+
+File containing the definition of functions to Input and Output.  
+
+
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}In\+And\+Out.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_in_and_out_8cpp_a68b73b00f67aa3dd2e582eb8861bdd00}\label{_in_and_out_8cpp_a68b73b00f67aa3dd2e582eb8861bdd00}} 
+void {\bfseries Print\+\_\+\+Program\+\_\+\+Info} ()
+\item 
+void \mbox{\hyperlink{_in_and_out_8cpp_a5bd11a57edba2cdd1c89950abeb071e8}{Output\+\_\+\+Solutions}} (\mbox{\hyperlink{struct_solutions}{Solutions}} $\ast$answers)
+\item 
+int \mbox{\hyperlink{_in_and_out_8cpp_a491499bb5c09ff9fa7dd22e8ccbc8f6b}{Clean\+\_\+\+Buffer}} ()
+\item 
+void \mbox{\hyperlink{_in_and_out_8cpp_aeddb43c87f3965842120848280287b15}{Get\+\_\+\+One\+\_\+\+Double\+\_\+\+From\+\_\+\+File}} (FILE $\ast$fp, double $\ast$a)
+\item 
+void \mbox{\hyperlink{_in_and_out_8cpp_a285cb95f848cba732f15086b74f466dd}{Get\+\_\+\+One\+\_\+\+Int\+\_\+\+From\+\_\+\+File}} (FILE $\ast$fp, int $\ast$a)
+\item 
+void \mbox{\hyperlink{_in_and_out_8cpp_ad232e338f7350cb78c6c55799a51813c}{Get\+\_\+\+One\+\_\+\+Coef\+\_\+\+From\+\_\+\+Console}} (double $\ast$a, const char $\ast$print)
+\item 
+void \mbox{\hyperlink{_in_and_out_8cpp_a4cab79ce44d00ba7a6a64df228b524e2}{Get\+\_\+\+Coef}} (double $\ast$a, double $\ast$b, double $\ast$c)
+\item 
+void \mbox{\hyperlink{_in_and_out_8cpp_ac8f6344fefc361a40ce94c7601be4852}{Get\+\_\+\+Rand\+\_\+\+Coef}} (double $\ast$a, double $\ast$b, double $\ast$c)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+File containing the definition of functions to Input and Output. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_in_and_out_8cpp_a491499bb5c09ff9fa7dd22e8ccbc8f6b}\label{_in_and_out_8cpp_a491499bb5c09ff9fa7dd22e8ccbc8f6b}} 
+\index{InAndOut.cpp@{InAndOut.cpp}!Clean\_Buffer@{Clean\_Buffer}}
+\index{Clean\_Buffer@{Clean\_Buffer}!InAndOut.cpp@{InAndOut.cpp}}
+\doxysubsubsection{\texorpdfstring{Clean\_Buffer()}{Clean\_Buffer()}}
+{\footnotesize\ttfamily int Clean\+\_\+\+Buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function clean cmd buffer \begin{DoxyReturn}{Returns}
+amount cleared symbols
+\end{DoxyReturn}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_in_and_out_8cpp_a4cab79ce44d00ba7a6a64df228b524e2}\label{_in_and_out_8cpp_a4cab79ce44d00ba7a6a64df228b524e2}} 
+\index{InAndOut.cpp@{InAndOut.cpp}!Get\_Coef@{Get\_Coef}}
+\index{Get\_Coef@{Get\_Coef}!InAndOut.cpp@{InAndOut.cpp}}
+\doxysubsubsection{\texorpdfstring{Get\_Coef()}{Get\_Coef()}}
+{\footnotesize\ttfamily void Get\+\_\+\+Coef (\begin{DoxyParamCaption}\item[{double $\ast$}]{a,  }\item[{double $\ast$}]{b,  }\item[{double $\ast$}]{c }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function to read coefficients of equation from console input 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em a} & Pointer to variable in which coefficient before x$^\wedge$2 will be written \\
+\hline
+\mbox{\texttt{ out}}  & {\em b} & Pointer to variable in which coefficient before x will be written \\
+\hline
+\mbox{\texttt{ out}}  & {\em c} & Pointer to variable in which free term will be written\\
+\hline
+\end{DoxyParams}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_in_and_out_8cpp_ad232e338f7350cb78c6c55799a51813c}\label{_in_and_out_8cpp_ad232e338f7350cb78c6c55799a51813c}} 
+\index{InAndOut.cpp@{InAndOut.cpp}!Get\_One\_Coef\_From\_Console@{Get\_One\_Coef\_From\_Console}}
+\index{Get\_One\_Coef\_From\_Console@{Get\_One\_Coef\_From\_Console}!InAndOut.cpp@{InAndOut.cpp}}
+\doxysubsubsection{\texorpdfstring{Get\_One\_Coef\_From\_Console()}{Get\_One\_Coef\_From\_Console()}}
+{\footnotesize\ttfamily void Get\+\_\+\+One\+\_\+\+Coef\+\_\+\+From\+\_\+\+Console (\begin{DoxyParamCaption}\item[{double $\ast$}]{a,  }\item[{const char $\ast$}]{print }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function to print message (in cmd) and then read one double variable (from cmd) with checking for correct format 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em a} & Pointer to variable in which cmd input will be written \\
+\hline
+\mbox{\texttt{ in}}  & {\em print} & Text that will be output to the cmd befor reading value of variable\\
+\hline
+\end{DoxyParams}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_in_and_out_8cpp_aeddb43c87f3965842120848280287b15}\label{_in_and_out_8cpp_aeddb43c87f3965842120848280287b15}} 
+\index{InAndOut.cpp@{InAndOut.cpp}!Get\_One\_Double\_From\_File@{Get\_One\_Double\_From\_File}}
+\index{Get\_One\_Double\_From\_File@{Get\_One\_Double\_From\_File}!InAndOut.cpp@{InAndOut.cpp}}
+\doxysubsubsection{\texorpdfstring{Get\_One\_Double\_From\_File()}{Get\_One\_Double\_From\_File()}}
+{\footnotesize\ttfamily void Get\+\_\+\+One\+\_\+\+Double\+\_\+\+From\+\_\+\+File (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{fp,  }\item[{double $\ast$}]{a }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function read one double variable from file with checking correct format 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em a} & Pointer to variable in which file input will be written \\
+\hline
+\mbox{\texttt{ in}}  & {\em fp} & Pointer to file from which value of variable will be read\\
+\hline
+\end{DoxyParams}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_in_and_out_8cpp_a285cb95f848cba732f15086b74f466dd}\label{_in_and_out_8cpp_a285cb95f848cba732f15086b74f466dd}} 
+\index{InAndOut.cpp@{InAndOut.cpp}!Get\_One\_Int\_From\_File@{Get\_One\_Int\_From\_File}}
+\index{Get\_One\_Int\_From\_File@{Get\_One\_Int\_From\_File}!InAndOut.cpp@{InAndOut.cpp}}
+\doxysubsubsection{\texorpdfstring{Get\_One\_Int\_From\_File()}{Get\_One\_Int\_From\_File()}}
+{\footnotesize\ttfamily void Get\+\_\+\+One\+\_\+\+Int\+\_\+\+From\+\_\+\+File (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{fp,  }\item[{int $\ast$}]{a }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function read one int variable from file with checking correct format 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em a} & Pointer to variable in which file input will be written \\
+\hline
+\mbox{\texttt{ in}}  & {\em fp} & Pointer to file from which value of variable will be read\\
+\hline
+\end{DoxyParams}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_in_and_out_8cpp_ac8f6344fefc361a40ce94c7601be4852}\label{_in_and_out_8cpp_ac8f6344fefc361a40ce94c7601be4852}} 
+\index{InAndOut.cpp@{InAndOut.cpp}!Get\_Rand\_Coef@{Get\_Rand\_Coef}}
+\index{Get\_Rand\_Coef@{Get\_Rand\_Coef}!InAndOut.cpp@{InAndOut.cpp}}
+\doxysubsubsection{\texorpdfstring{Get\_Rand\_Coef()}{Get\_Rand\_Coef()}}
+{\footnotesize\ttfamily void Get\+\_\+\+Rand\+\_\+\+Coef (\begin{DoxyParamCaption}\item[{double $\ast$}]{a,  }\item[{double $\ast$}]{b,  }\item[{double $\ast$}]{c }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function to get random coefficients of equation 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em a} & Pointer to variable in which coefficient before x$^\wedge$2 will be written \\
+\hline
+\mbox{\texttt{ out}}  & {\em b} & Pointer to variable in which coefficient before x will be written \\
+\hline
+\mbox{\texttt{ out}}  & {\em c} & Pointer to variable in which free term will be written\\
+\hline
+\end{DoxyParams}
+\DoxyHorRuler{0}
+ \mbox{\Hypertarget{_in_and_out_8cpp_a5bd11a57edba2cdd1c89950abeb071e8}\label{_in_and_out_8cpp_a5bd11a57edba2cdd1c89950abeb071e8}} 
+\index{InAndOut.cpp@{InAndOut.cpp}!Output\_Solutions@{Output\_Solutions}}
+\index{Output\_Solutions@{Output\_Solutions}!InAndOut.cpp@{InAndOut.cpp}}
+\doxysubsubsection{\texorpdfstring{Output\_Solutions()}{Output\_Solutions()}}
+{\footnotesize\ttfamily void Output\+\_\+\+Solutions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_solutions}{Solutions}} $\ast$}]{answers }\end{DoxyParamCaption})}
+
+\DoxyHorRuler{0}
+ Function to output in cmd \mbox{\hyperlink{struct_solutions}{Solutions}} structure 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em answers} & \mbox{\hyperlink{struct_solutions}{Solutions}} structure to output\\
+\hline
+\end{DoxyParams}
+\DoxyHorRuler{0}
+ 
