@@ -5,10 +5,13 @@
 
 #include "SolveEq.h"
 
-const int GREEN         = 10;
-const int RED           = 12;
-const int YELLOW        = 14;
-const int DEFAULT_COLOR = 15;
+enum CONSOLE_COLORS {
+    GREEN         = 10,
+    RED           = 12,
+    YELLOW        = 14,
+    DEFAULT_COLOR = 15
+};
+
 
 int Clean_Buffer();
 

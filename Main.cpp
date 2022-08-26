@@ -39,11 +39,18 @@ int main(int argc, const char* argv[])
 
 			Get_Coef(&a, &b, &c);
 
-			Polynomial* anses = Solve_Round_Eqution(a, b, c);
+			Polynomial answer = {};
+			int ExitStatus = Solve_Round_Eqution(a, b, c, &answer);
+			if (ExitStatus == BAD_EXIT_STATUS)
+			{ 
+				SetConsoleTextAttribute(hConsole, RED);
+				printf("The program cannot solve this equation\n"); 
+				SetConsoleTextAttribute(hConsole, DEFAULT_COLOR);
+			}
+			else
+				Output_Polynomial(&answer);
 
-			Output_Polynomial(anses);
-
- 			Del_Polynomial(anses);
+ 			Del_Polynomial(&answer);
 			break;
 		}
 

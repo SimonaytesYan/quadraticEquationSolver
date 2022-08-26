@@ -19,28 +19,28 @@ const double EPSILON = 1e-6;
 //!-----------------------------------------------------
 //! Polynomial structure constuctor 
 //! \param [in] nRoots Ammount of roots in structure
-//! \return Return pointer to the created structure (or null after bad allocation)
+//! \param [out] structToCreate Pointer to structure to be created
+//! \return Return Exit status (GOOD_EXIT_STATUS if executed corrently and BAD_EXIT_STATUS otherwise)
 //! 
 //!-----------------------------------------------------
-Polynomial* New_Polynomial(int nCoef)
-{
-	Polynomial* now_sol = (Polynomial*)calloc(1, sizeof(Polynomial));
-	if (now_sol == NULL)
-		return NULL;
+int New_Polynomial(int nCoef, Polynomial *const  structToCreate)
+{	
+	assert(structToCreate);
 
-	now_sol->nCoef = nCoef;
+	structToCreate->nCoef			= nCoef;
+	structToCreate->structureStatus = ALL_RIGHT;
 	if (nCoef > 0) 
 	{
-		now_sol->coefficients = (double*)calloc(nCoef, sizeof(double));
+		structToCreate->coefficients = (double*)calloc(nCoef, sizeof(double));
 
-		if (now_sol->coefficients == NULL) 
+		if (structToCreate->coefficients == NULL) 
 		{
-			free(now_sol);
-			return NULL;
+			structToCreate->structureStatus = DOES_NOT_EXIST;
+			return BAD_EXIT_STATUS;
 		}
 	}
 
-	return now_sol;
+	return GOOD_EXIT_STATUS;
 }
 
 //!-----------------------------------------------------
@@ -48,12 +48,11 @@ Polynomial* New_Polynomial(int nCoef)
 //! \param [in] r Pointer to the structure to be destructed
 //! 
 //!-----------------------------------------------------
-void Del_Polynomial(Polynomial* r)
+void Del_Polynomial(Polynomial *const r)
 {
 	free(r->coefficients);
 	r->coefficients = nullptr;
-	free(r);
-	r = nullptr;
+	r->structureStatus = DOES_NOT_EXIST;
 }
 
 //!-----------------------------------------------------
@@ -83,34 +82,34 @@ static double Evaluate_Discriminant(double a, double b, double c)
 
 //!-----------------------------------------------------
 //! Function to solve linear equation
-//! \param [in] b Coefficient before x
-//! \param [in] c Free term
-//! \return		Structure Polynomial with solution data
+//! \param [in]  b      Coefficient before x
+//! \param [in]  c	    Free term
+//! \param [out] answer	Polinomial structure in wich the answers will be written 
+//! \return				Exit status (GOOD_EXIT_STATUS if executed corrently and BAD_EXIT_STATUS otherwise)
 //! 
 //! ----------------------------------------------------
-Polynomial* Solve_Linear_Equation(double b, double c)
-{
+int  Solve_Linear_Equation(double b, double c, Polynomial* const answer)
+{  
+	assert(answer != NULL);
+	if (!isfinite(b) || !isfinite(c))
+		return BAD_EXIT_STATUS;
+
 	if (Is_Equal(b, 0))
 	{
 		if (Is_Equal(c, 0))
-			return New_Polynomial(INF_ROOTS);
-		return New_Polynomial(0);
+			return New_Polynomial(INF_ROOTS, answer);
+
+		return New_Polynomial(0, answer);;
 	}
 
-	Polynomial* r = New_Polynomial(1);
-	r->coefficients[0] = -c / b;
-	return r;
+	int ExitStatus = New_Polynomial(1, answer);
+	if (ExitStatus != GOOD_EXIT_STATUS)
+		return ExitStatus;
+
+	answer->coefficients[0] = -c / b;
+	return GOOD_EXIT_STATUS;
 }
 
-
-//!-----------------------------------------------------
-//! Function to solve round equation
-//! \param [in] a Coefficient before x^2
-//! \param [in] b Coefficient before x
-//! \param [in] c Free term
-//! \return		Structure Polynomial with solution data
-//! 
-//! ----------------------------------------------------
 void Swap_Double(double *a, double *b) 
 {
 	assert(a != NULL);
@@ -122,39 +121,48 @@ void Swap_Double(double *a, double *b)
 
 //!-----------------------------------------------------
 //! Function to solve round equation
-//! \param [in] a Coefficient before x^2
-//! \param [in] b Coefficient before x
-//! \param [in] c Free term
-//! \return		Structure Polynomial with solution data
+//! \param [in] a		Coefficient before x^2
+//! \param [in] b		Coefficient before x
+//! \param [in] c		Free term
+//! \param [out] answer	Polinomial structure in wich the answers will be written 
+//! \return				Exit status (GOOD_EXIT_STATUS if executed corrently and BAD_EXIT_STATUS otherwise)
 //! 
 //! ----------------------------------------------------
-Polynomial* Solve_Round_Eqution(double a, double b, double c)
+int Solve_Round_Eqution(double a, double b, double c, Polynomial* const answer)
 {
 	if (!isfinite(a) || !isfinite(b) || !isfinite(c))
-		return nullptr;
+		return BAD_EXIT_STATUS;
 
 	if (Is_Equal(a,0))
-		return Solve_Linear_Equation(b, c);
+		return Solve_Linear_Equation(b, c, answer);
 
 	double d = Evaluate_Discriminant(a, b, c);
 
 	if (Is_Equal(d,0))
 	{
-		Polynomial* r = New_Polynomial(1);
-		r->coefficients[0] = -b / (2 * a);
-		return r;
+		int ExitStatus = New_Polynomial(1, answer);
+		if (ExitStatus == BAD_EXIT_STATUS)
+			return ExitStatus;
+
+		answer->coefficients[0] = -b / (2 * a);
+
+		return GOOD_EXIT_STATUS;
 	}
 
 	if (d < 0)
-		return New_Polynomial(0);
+		return New_Polynomial(0, answer);
 
 	double sqrt_d = sqrt(d);
-	Polynomial* r = New_Polynomial(2);
-	r->coefficients[0] = (-b - sqrt_d) / (2 * a);
-	r->coefficients[1] = (-b + sqrt_d) / (2 * a);
 
-	if (r->coefficients[0] > r->coefficients[1])
-		Swap_Double(&r->coefficients[0], &r->coefficients[1]);
+	int ExitStatus = New_Polynomial(2, answer);
+	if (ExitStatus == BAD_EXIT_STATUS)
+		return ExitStatus;
+
+	answer->coefficients[0] = (-b - sqrt_d) / (2 * a);
+	answer->coefficients[1] = (-b + sqrt_d) / (2 * a);
+
+	if (answer->coefficients[0] > answer->coefficients[1])
+		Swap_Double(&answer->coefficients[0], &answer->coefficients[1]);
 	
-	return r;
+	return GOOD_EXIT_STATUS;
 }

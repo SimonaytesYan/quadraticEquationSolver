@@ -22,9 +22,10 @@ const char* DEFAULT_TESTS_PATH = "UnitTests\\UnitTests.txt";
 //! \param [out] B     Pointer to variable in which coefficient befor x will be written
 //! \param [out] C     Pointer to variable in which free coefficient will be written
 //! \param [out] r_ans Pointer to structure in which correct answer will be written
+//! \return			   
 //! 
 //! ------------------------------------------------
-void Get_Test_From_File(FILE* fp, double* A, double* B, double* C, Polynomial** Correct_ans)
+int Get_Test_From_File(FILE* fp, double* A, double* B, double* C, Polynomial* Correct_ans)
 {
 	assert(A != NULL);
 	assert(B != NULL);
@@ -39,10 +40,12 @@ void Get_Test_From_File(FILE* fp, double* A, double* B, double* C, Polynomial** 
 	Get_One_Double_From_File(fp, C);
 	Get_One_Int_From_File(fp, &nRoots);
 
-	*Correct_ans = New_Polynomial(nRoots);
+	int ExitStatus = New_Polynomial(nRoots, Correct_ans);
+	if (ExitStatus == BAD_EXIT_STATUS)
+		return BAD_EXIT_STATUS;
 
 	for (int j = 0; j < nRoots; j++) {
-		Get_One_Double_From_File(fp, &((*Correct_ans)->coefficients[j]));
+		Get_One_Double_From_File(fp, &(Correct_ans->coefficients[j]));
 	}
 }
 
@@ -53,21 +56,23 @@ void Get_Test_From_File(FILE* fp, double* A, double* B, double* C, Polynomial** 
 //! \param [in] c     Test contidion. Coefficient will be written
 //! \param [in] r_ans Answer to test. Structure Polynomial
 //! \param [out] ans  Pointer to pointer to structure in which program answer will be written
-//! \return true if test passed and false otherwise
+//! \return			  Return Exit status (GOOD_EXIT_STATUS if executed corrently and BAD_EXIT_STATUS otherwise)
 //! 
 //! ------------------------------------------------
-bool Test_Round_Eqution(double a, double b, double c, Polynomial* correct_ans, Polynomial** program_ans)
+bool Test_Round_Eqution(double a, double b, double c, Polynomial* correct_ans, Polynomial* program_ans)
 {
 	assert(correct_ans != nullptr);
 	assert(program_ans != nullptr);
 
-	*program_ans = Solve_Round_Eqution(a, b, c);
+	int ExitStatus = Solve_Round_Eqution(a, b, c, program_ans);
+	if (ExitStatus == BAD_EXIT_STATUS)
+		return ExitStatus;
 
-	if ((*program_ans)->nCoef != correct_ans->nCoef)
+	if (program_ans->nCoef != correct_ans->nCoef)
 		return false;
 
 	for (int i = 0; i < correct_ans->nCoef; i++) {
-		if (!Is_Equal((*program_ans)->coefficients[i], correct_ans->coefficients[i]))
+		if (!Is_Equal(program_ans->coefficients[i], correct_ans->coefficients[i]))
 			return false;
 	}
 
@@ -79,7 +84,7 @@ bool Test_Round_Eqution(double a, double b, double c, Polynomial* correct_ans, P
 //! \param [in] Launch_Attrib LaunchAttributes structure which has information about launch conditions from cmd (including custom test file name)
 //! 
 //! ------------------------------------------------
-FILE* Open_Test_File(LaunchAttributes Launch_Attrib) 
+FILE* Open_Test_File(const LaunchAttributes Launch_Attrib) 
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	FILE *fp = nullptr;
@@ -118,7 +123,7 @@ FILE* Open_Test_File(LaunchAttributes Launch_Attrib)
 //! \param [in] correct_ans Correct answer to a run test 
 //! 
 //! ------------------------------------------------
-void Print_Test_Result(bool isPassed, Polynomial* program_ans, Polynomial* correct_ans)
+void Print_Test_Result(bool isPassed, const Polynomial* const program_ans, const Polynomial* const correct_ans)
 {
 	assert(program_ans != NULL);
 	assert(correct_ans != NULL);
@@ -165,7 +170,7 @@ void Print_Test_Result(bool isPassed, Polynomial* program_ans, Polynomial* corre
 //! \param [in] Launch_Attrib LaunchAttributes structure which has information about launch conditions from cmd
 //! 
 //! ------------------------------------------------
-void Launch_Tests_For_Round_Equation_Solver(LaunchAttributes Launch_Attrib)
+void Launch_Tests_For_Round_Equation_Solver(const LaunchAttributes Launch_Attrib)
 {
 	FILE* fp = Open_Test_File(Launch_Attrib);
 
@@ -182,16 +187,16 @@ void Launch_Tests_For_Round_Equation_Solver(LaunchAttributes Launch_Attrib)
 		double A = 0;
 		double B = 0;
 		double C = 0;
-		Polynomial* correct_ans = nullptr;
+		Polynomial correct_ans = {};
 		Get_Test_From_File(fp, &A, &B, &C, &correct_ans);
 
-		Polynomial* program_ans = nullptr;
-		bool isPassed = Test_Round_Eqution(A, B, C, correct_ans, &program_ans);
+		Polynomial program_ans = {};
+		bool isPassed = Test_Round_Eqution(A, B, C, &correct_ans, &program_ans);
 
-		Print_Test_Result(isPassed, program_ans, correct_ans);
+		Print_Test_Result(isPassed, &program_ans, &correct_ans);
 
-		Del_Polynomial(correct_ans);
-		Del_Polynomial(program_ans);
+		Del_Polynomial(&correct_ans);
+		Del_Polynomial(&program_ans);
 	}
 	fclose(fp);
 }
