@@ -22,7 +22,7 @@ void Get_One_Int_From_File(FILE* fp, int* a);
 
 void Get_Coef(double* a, double* b, double* c);
 
-void Output_Solutions(Solutions*  anses);
+void Output_Polynomial(Polynomial*  anses);
 
 void Print_Program_Info();
 

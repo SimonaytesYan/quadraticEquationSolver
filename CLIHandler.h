@@ -25,8 +25,8 @@ struct CmdComand
 	const char* long_name;
 	const int program_mode;
 	void (*calling_function)(LaunchAttributes* LC, int argc, const char* argv[], int index);
-	const char* description;
 
+	const char* description;
 };
 
 void Print_All_Cmd_Flags();

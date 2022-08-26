@@ -17,23 +17,23 @@
 const double EPSILON = 1e-6;
 
 //!-----------------------------------------------------
-//! Solutions structure constuctor 
+//! Polynomial structure constuctor 
 //! \param [in] nRoots Ammount of roots in structure
 //! \return Return pointer to the created structure (or null after bad allocation)
 //! 
 //!-----------------------------------------------------
-Solutions* Init_Solutions(int nRoots)
+Polynomial* New_Polynomial(int nCoef)
 {
-	Solutions* now_sol = (Solutions*)calloc(1, sizeof(Solutions));
+	Polynomial* now_sol = (Polynomial*)calloc(1, sizeof(Polynomial));
 	if (now_sol == NULL)
 		return NULL;
 
-	now_sol->nRoots = nRoots;
-	if (nRoots > 0) 
+	now_sol->nCoef = nCoef;
+	if (nCoef > 0) 
 	{
-		now_sol->roots = (double*)calloc(nRoots, sizeof(double));
+		now_sol->coefficients = (double*)calloc(nCoef, sizeof(double));
 
-		if (now_sol->roots == NULL) 
+		if (now_sol->coefficients == NULL) 
 		{
 			free(now_sol);
 			return NULL;
@@ -44,14 +44,14 @@ Solutions* Init_Solutions(int nRoots)
 }
 
 //!-----------------------------------------------------
-//! Structure Solutions destructor
+//! Structure Polynomial destructor
 //! \param [in] r Pointer to the structure to be destructed
 //! 
 //!-----------------------------------------------------
-void Del_Solutions(Solutions* r)
+void Del_Polynomial(Polynomial* r)
 {
-	free(r->roots);
-	r->roots = nullptr;
+	free(r->coefficients);
+	r->coefficients = nullptr;
 	free(r);
 	r = nullptr;
 }
@@ -85,20 +85,20 @@ static double Evaluate_Discriminant(double a, double b, double c)
 //! Function to solve linear equation
 //! \param [in] b Coefficient before x
 //! \param [in] c Free term
-//! \return		Structure Solutions with solution data
+//! \return		Structure Polynomial with solution data
 //! 
 //! ----------------------------------------------------
-Solutions* Solve_Linear_Equation(double b, double c)
+Polynomial* Solve_Linear_Equation(double b, double c)
 {
 	if (Is_Equal(b, 0))
 	{
 		if (Is_Equal(c, 0))
-			return Init_Solutions(INF_ROOTS);
-		return Init_Solutions(0);
+			return New_Polynomial(INF_ROOTS);
+		return New_Polynomial(0);
 	}
 
-	Solutions* r = Init_Solutions(1);
-	r->roots[0] = -c / b;
+	Polynomial* r = New_Polynomial(1);
+	r->coefficients[0] = -c / b;
 	return r;
 }
 
@@ -108,7 +108,7 @@ Solutions* Solve_Linear_Equation(double b, double c)
 //! \param [in] a Coefficient before x^2
 //! \param [in] b Coefficient before x
 //! \param [in] c Free term
-//! \return		Structure Solutions with solution data
+//! \return		Structure Polynomial with solution data
 //! 
 //! ----------------------------------------------------
 void Swap_Double(double *a, double *b) 
@@ -125,10 +125,10 @@ void Swap_Double(double *a, double *b)
 //! \param [in] a Coefficient before x^2
 //! \param [in] b Coefficient before x
 //! \param [in] c Free term
-//! \return		Structure Solutions with solution data
+//! \return		Structure Polynomial with solution data
 //! 
 //! ----------------------------------------------------
-Solutions* Solve_Round_Eqution(double a, double b, double c)
+Polynomial* Solve_Round_Eqution(double a, double b, double c)
 {
 	if (!isfinite(a) || !isfinite(b) || !isfinite(c))
 		return nullptr;
@@ -140,21 +140,21 @@ Solutions* Solve_Round_Eqution(double a, double b, double c)
 
 	if (Is_Equal(d,0))
 	{
-		Solutions* r = Init_Solutions(1);
-		r->roots[0] = -b / (2 * a);
+		Polynomial* r = New_Polynomial(1);
+		r->coefficients[0] = -b / (2 * a);
 		return r;
 	}
 
 	if (d < 0)
-		return Init_Solutions(0);
+		return New_Polynomial(0);
 
 	double sqrt_d = sqrt(d);
-	Solutions* r = Init_Solutions(2);
-	r->roots[0] = (-b - sqrt_d) / (2 * a);
-	r->roots[1] = (-b + sqrt_d) / (2 * a);
+	Polynomial* r = New_Polynomial(2);
+	r->coefficients[0] = (-b - sqrt_d) / (2 * a);
+	r->coefficients[1] = (-b + sqrt_d) / (2 * a);
 
-	if (r->roots[0] > r->roots[1])
-		Swap_Double(&r->roots[0], &r->roots[1]);
+	if (r->coefficients[0] > r->coefficients[1])
+		Swap_Double(&r->coefficients[0], &r->coefficients[1]);
 	
 	return r;
 }

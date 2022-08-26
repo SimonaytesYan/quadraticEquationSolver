@@ -5,7 +5,7 @@
 #include <windows.h>
 
 #include "InAndOut.h"
-#include "ConsoleHandler.h"
+#include "CLIHandler.h"
 
 /*!
 * \file

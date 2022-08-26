@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #include "SolveEq.h"
-#include "ConsoleHandler.h"
+#include "CLIHandler.h"
 #include "InAndOut.h"
 #include "UnitTest.h"
 
@@ -39,9 +39,11 @@ int main(int argc, const char* argv[])
 
 			Get_Coef(&a, &b, &c);
 
-			Solutions* anses = Solve_Round_Eqution(a, b, c);
-			Output_Solutions(anses);
- 			Del_Solutions(anses);
+			Polynomial* anses = Solve_Round_Eqution(a, b, c);
+
+			Output_Polynomial(anses);
+
+ 			Del_Polynomial(anses);
 			break;
 		}
 

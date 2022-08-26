@@ -20,27 +20,27 @@ void Print_Program_Info()
 }
 
 //!-----------------------------------------------------
-//! Function to output in cmd Solutions structure
-//! \param [in] answers Solutions structure to output
+//! Function to output in cmd Polynomial structure
+//! \param [in] answers Polynomial structure to output
 //! 
 //! ----------------------------------------------------
-void Output_Solutions(Solutions*  answers)
+void Output_Polynomial(Polynomial*  answers)
 {
 	assert(answers != NULL);
 
-	if (answers->nRoots == INF_ROOTS)
+	if (answers->nCoef == INF_ROOTS)
 		printf("Infinity number of roots\n");
 
-	else if (answers->nRoots == 0)
+	else if (answers->nCoef == 0)
 		printf("No roots\n");
 
-	else if (answers->nRoots == 1)
-		printf("x = %lg\n", answers->roots[0]);
+	else if (answers->nCoef == 1)
+		printf("x = %lg\n", answers->coefficients[0]);
 
-	else if (answers->nRoots > 1)
+	else if (answers->nCoef > 1)
 	{
-		for (int i = 0; i < answers->nRoots; i++)
-			printf("x%d = %lg ", i + 1, answers->roots[i]);
+		for (int i = 0; i < answers->nCoef; i++)
+			printf("x%d = %lg ", i + 1, answers->coefficients[i]);
 
 		printf("\n");
 	}
