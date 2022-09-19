@@ -53,7 +53,6 @@ void Del_Solutions(Solutions* r)
 	free(r->roots);
 	r->roots = nullptr;
 	free(r);
-	r = nullptr;
 }
 
 //!-----------------------------------------------------
